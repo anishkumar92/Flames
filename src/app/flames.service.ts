@@ -58,7 +58,5 @@ export class FlamesService {
       default:
         return 'Unknown';
     }
-
-    return result;
   }
 }
