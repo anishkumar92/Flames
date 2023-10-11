@@ -5,11 +5,11 @@
 @import "tailwindcss/utilities";
 /* You can add global styles to this file, and also import other style files */
 :root {
-  --color1: #a0ddff;
-  --color2: #758ecd;
-  --color3: #c1cefe;
-  --color4: #7189ff;
-  --color5: #624cab;
+  --color1: #1a535c;
+  --color2: #4ecdc4;
+  --color3: #f7fff7;
+  --color4: #ff6b6b;
+  --color5: #ffe66d;
 }
 
 body {
@@ -20,4 +20,27 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+button {
+  background-color: var(--color4);
+  color: var(--color3);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:disabled {
+    background-color: var(--color2);
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background-color: var(--color5);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 5px var(--color1);
+  }
 }

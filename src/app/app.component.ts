@@ -48,7 +48,7 @@ export class AppComponent {
       id: i,
       url: `url(./assets/${result}.png)`,
       left: Math.random() * 100 + 'vw',
-
+      top: Math.random() * 100 + 'vh',
       animationDuration: Math.random() * 5 + 3 + 's',
     }));
   }

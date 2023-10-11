@@ -13,4 +13,8 @@ describe('FlamesService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should return Love for names John and Jane', () => {
+    expect(service.calculateFlames('John', 'Jane')).toBe('Enemies');
+  });
 });
