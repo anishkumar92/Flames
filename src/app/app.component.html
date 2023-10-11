@@ -7,7 +7,7 @@
     <div class="flex flex-col md:flex-row justify-center items-center mb-4">
       <input type="text" placeholder="Enter Name 1" [(ngModel)]="name1" name="name1" required
         class="p-2 border rounded mb-2 md:mb-0 md:mr-2 w-full" style="border-color: var(--color2);">
-      <div *ngIf="flamesForm.submitted && !name1" class="text-red-500">This field is required</div>
+      <div *ngIf="flamesForm.submitted && !name1" class="text-red-500 mt-2">This field is required</div>
     </div>
 
     <div class="flex flex-col md:flex-row justify-center items-center mb-4">
@@ -17,10 +17,14 @@
     </div>
 
     <button (click)="calculate(); flamesForm.reset()" [disabled]="!flamesForm.valid"
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
-      style="background-color: var(--color4);">
+      class="text-white font-bold py-2 px-4 rounded w-full focus:outline-none" [ngStyle]="{
+    'background-color': flamesForm.valid ? 'var(--color4)' : 'var(--color2)',
+    'cursor': flamesForm.valid ? 'pointer' : 'not-allowed'
+  }" (mouseover)="flamesForm.valid && (buttonHover = true)" (mouseout)="buttonHover = false"
+      [style.boxShadow]="buttonHover ? '0 4px 6px rgba(0, 0, 0, 0.1)' : 'none'">
       Calculate
     </button>
+
   </form>
 
   <div class="mt-4">
@@ -28,15 +32,18 @@
       Result: {{result}}
     </h2>
   </div>
+
   <div class="celebration" *ngIf="showCelebration">
-    <div class="sticker sticker1"></div>
-    <div class="sticker sticker2"></div>
-    <div class="sticker sticker3"></div>
-    <!-- Add more stickers as needed -->
+    <div *ngFor="let sticker of stickers" [ngStyle]="{
+          'background-image': sticker.url,
+         'left': sticker.left,
+         'animation-duration': sticker.animationDuration
+       }" class="sticker">
+    </div>
+    <audio #audioPlayer preload="none">
+      <source [src]="soundUrl" type="audio/mp3">
+    </audio>
   </div>
 
-  <audio #audioPlayer>
-    <source src="../assets/wedding-applause-cheerfully-7127.mp3" type="audio/mp3">
-  </audio>
 
 </div>

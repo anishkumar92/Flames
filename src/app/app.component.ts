@@ -7,27 +7,49 @@ import { FlamesService } from './flames.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  audio: any;
   @ViewChild('audioPlayer') audioPlayer!: ElementRef;
   title = 'flames-app';
   result = '';
   name1: string = '';
   name2: string = '';
   showCelebration = false;
+  stickerUrl = 'url(./assets/Love.png)';
+  soundUrl = './assets/happy.mp3';
+  stickers: any[] = [];
+  buttonHover = false;
   constructor(private flamesService: FlamesService) {}
 
-  calculate() {
+  async calculate() {
     const result = this.flamesService.calculateFlames(this.name1, this.name2);
     console.log('result', result);
     this.result = result;
+    this.createStickers(20, result);
     this.showCelebration = true;
     setTimeout(() => (this.showCelebration = false), 5000); // Hide after 5 seconds
 
-    this.audioPlayer.nativeElement.play(); // Play audio
+    this.soundUrl = `./assets/${
+      result === 'Love' || result === 'Marriage' ? 'happy' : 'sad'
+    }.mp3`;
+    // Create a new Audio object and play it
+    if (this.audio) {
+      this.audio.pause();
+    }
+    this.audio = new Audio(this.soundUrl);
+    try {
+      await this.audio.play();
+    } catch (error) {
+      console.log('Play was interrupted:', error);
+    }
+  }
 
-    setTimeout(() => {
-      this.showCelebration = false;
-      this.audioPlayer.nativeElement.pause(); // Stop audio after 5 seconds
-      this.audioPlayer.nativeElement.currentTime = 0;
-    }, 5000);
+  createStickers(count: number, result: string) {
+    this.stickers = Array.from({ length: count }, (_, i) => ({
+      id: i,
+      url: `url(./assets/${result}.png)`,
+      left: Math.random() * 100 + 'vw',
+
+      animationDuration: Math.random() * 5 + 3 + 's',
+    }));
   }
 }

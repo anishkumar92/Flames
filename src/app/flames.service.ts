@@ -56,7 +56,7 @@ export class FlamesService {
       case 'S':
         return 'Siblings';
       default:
-        return 'Unknown';
+        return 'Invalid';
     }
   }
 }
